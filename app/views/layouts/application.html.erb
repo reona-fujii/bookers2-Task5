@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookers2-debug</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= render 'layouts/header' %>
+    <div class='search'>
+      <% if user_signed_in? %>
+      
+        <!--form_tag ver-->
+        <!--<= form_tag(search_path, method: :get) do %>-->
+        <!--<= text_field_tag (:word) %>-->
+  　   　<!--<= select_tag  'range' ,options_for_select([['---選択してください---', ''], ['User', '1'], ['Book', '2']]) %>-->
+     　　<!--<= select_tag 'search', options_for_select([["前方一致","forward_match"], ["後方一致","backward_match"], ["完全一致","perfect_match"], ["部分一致","partial_match"]]) %>-->
+   　  　<!--<= submit_tag "検索" %>-->
+   　  　
+   　    <%= form_with url: search_path, method: :get, local: true do |f| %>
+        <%= f.text_field :word %>
+        <%= f.select :range, {'User': 1, 'Book': 2} %>
+        <%= f.select :search, {"前方一致": "forward_match", "後方一致": "backward_match", "完全一致": "perfect_match", "部分一致": "partial_match"} %>
+   　  　<%= f.submit "検索" %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="container">
+      <p id="notice"><%= notice %></p>
+      <%= yield %>
+    </div>
+    <%= render 'layouts/footer' %>
+  </body>
+</html>
